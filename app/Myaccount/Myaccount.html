@@ -1,0 +1,64 @@
+<style>
+    .ng-dirty.ng-invalid {
+        border-color: #FA787E;
+    }
+
+    .ng-dirty.ng-valid {
+        border-color: #78FA89;
+    }
+
+</style>
+
+<form name="vm.accountForm" novalidate ng-show="!vm.account">
+
+    <div class="form-group">
+        <label for="firstname">Имя</label>
+        <input type="input" class="form-control" data-ng-model="account.name" required ng-minlength="3" id="firstname" placeholder="Имя" name="accountName">
+    </div>
+    <div ng-messages="vm.accountForm.accountName.$error" ng-if="vm.accountForm.accountName.$dirty">
+        <div ng-message="required" class="alert alert-danger" role="alert">Введите имя</div>
+        <div ng-message="minlength" class="alert alert-danger" role="alert">Имя слишком короткое</div>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" data-ng-model="account.email" id="email" data-ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" placeholder="Email" name="accountEmail">
+    </div>
+    <div ng-messages="vm.accountForm.accountEmail.$error" ng-if="vm.accountForm.accountEmail.$dirty">
+        <div ng-message="required" class="alert alert-danger" role="alert">Введите email</div>
+        <div ng-message="pattern" class="alert alert-danger">Некорректный email</div>
+    </div>
+
+    <div class="form-group">
+        <label for="phone">Телефон</label>
+        <input type="phone" class="form-control" data-ng-model="account.phone" id="phone" data-ng-pattern="/^\+7\d{10}$/" placeholder="Телефон" name="accountPhone">
+    </div>
+    <div ng-messages="vm.accountForm.accountPhone.$error" ng-if="vm.accountForm.accountPhone.$dirty">
+        <div ng-message="pattern" class="alert alert-danger">Некорректный номер</div>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" data-ng-disabled="vm.accountForm.$invalid" data-ng-click="vm.saveAccount(account)">
+            Отправить
+        </button>
+    </div>
+
+</form>
+
+<div class="list-group" ng-show="vm.account">
+    <div class="list-group-item" ng-if="vm.account.name">
+        <p class="list-group-item-text">
+            Имя: {{ vm.account.name }}
+        </p>
+    </div>
+    <div class="list-group-item" ng-if="vm.account.email">
+        <p class="list-group-item-text">
+            Email: {{ vm.account.email }}
+        </p>
+    </div>
+    <div class="list-group-item" ng-if="vm.account.phone">
+        <p class="list-group-item-text">
+            Телефон: {{ vm.account.phone }}
+        </p>
+    </div>
+</div>
